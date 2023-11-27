@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,23 +12,23 @@ import {WalletsComponent} from "./wallets/wallets.component";
 import {WalletTransactionsComponent} from "./wallet-transactions/wallet-transactions.component";
 import {CurrencyDepositComponent} from "./currency-deposit/currency-deposit.component";
 import {ReactiveFormsModule} from "@angular/forms";
-import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
 
-function initializeKeycloak(keycloak: KeycloakService) {
-  return () =>
-    keycloak.init({
-      config: {
-        url: 'http://localhost:8080',
-        realm: 'wallet-realm',
-        clientId: 'wallet-client'
+export function kcFactory(kcService : KeycloakService){
+  return ()=>{
+    kcService.init({
+      config : {
+        realm :"wallet-realm",
+        clientId : "wallet-client",
+        url : "http://localhost:8080"
       },
-      initOptions: {
-        onLoad: 'check-sso',
-        checkLoginIframe: true
+      initOptions : {
+        onLoad : "check-sso",
+        checkLoginIframe : true
       }
-    });
+    })
+  }
 }
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,12 +48,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     KeycloakAngularModule
   ],
   providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeKeycloak,
-      multi: true,
-      deps: [KeycloakService]
-    }
+    {provide : APP_INITIALIZER, deps : [KeycloakService],useFactory : kcFactory, multi : true}
   ],
   bootstrap: [AppComponent]
 })

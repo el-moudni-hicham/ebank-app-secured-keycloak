@@ -5,7 +5,7 @@ import {ContinentsComponent} from "./continents/continents.component";
 import {WalletsComponent} from "./wallets/wallets.component";
 import {WalletTransactionsComponent} from "./wallet-transactions/wallet-transactions.component";
 import {CurrencyDepositComponent} from "./currency-deposit/currency-deposit.component";
-import { AuthGuard } from './guards/security.guards';
+import {AuthGuard} from "./guards/sercurity.guard";
 
 const routes: Routes = [
   {
@@ -15,16 +15,14 @@ const routes: Routes = [
     path : "continents", component : ContinentsComponent
   },
   {
-    path : "wallets", component : WalletsComponent,
-    canActivate: [AuthGuard], data: { roles: ['USER'] }
+    path : "wallets", component : WalletsComponent, canActivate : [AuthGuard], data : { roles : ['USER']}
   },
   {
     path : "transactions/:walletId", component : WalletTransactionsComponent,
-    canActivate: [AuthGuard], data: { roles: ['USER'] }
+    canActivate : [AuthGuard], data : { roles : ['USER']}
   },
   {
     path : "currencyDeposit", component : CurrencyDepositComponent,
-    canActivate: [AuthGuard], data: { roles: ['USER'] }
   }
 ];
 
